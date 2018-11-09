@@ -1,0 +1,49 @@
+h1{
+    color: white;
+    text-align: center;
+    font-family: "American Typewriter";
+}
+h2{
+    color: white;
+    text-align: center;
+    font-family: "American Typewriter";
+}
+#fields{
+    text-align: center;
+}
+h4{
+    text-align: center;
+    color: white;
+    font-family: "American Typewriter";
+}
+#text{
+    font-family: "American Typewriter";
+    color: white;
+    text-align: center;
+}
+.white{
+    background: white;
+}
+.blue{
+    background: lightblue;
+}
+.yellow{
+    background:yellow;
+}
+#table{
+    margin-left: auto;
+    margin-right: auto;
+}
+#submit{
+    text-align: center;
+}
+#final{
+    text-align: center;
+    color: white;
+    font-family: "American Typewriter";
+}
+#nextstep {
+    text-align: center;
+    color: white;
+    font-family: "American Typewriter";
+}

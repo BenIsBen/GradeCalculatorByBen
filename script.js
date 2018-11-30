@@ -1,4 +1,3 @@
-
 function Proceed(){
     var call = document.getElementById("name").value;
     var message = "This is website that will help you calculate your grades so you can ensure you're doing your very best!";
@@ -10,26 +9,31 @@ function Proceed(){
 var rowCount = 0;
 
 function addTo() {
-    var nameofcat = document.getElementById("typename").value;
-    if(nameofcat.length == 0){
-        nameofcat = "Homework";
+    if(rowCount < 6){
+        var nameofcat = document.getElementById("typename").value;
+        if(nameofcat.length == 0){
+            nameofcat = "Homework";
+        }
+        var tabler = document.createElement("tr");
+        var tabled = document.createElement("td");
+        var tabled2 = document.createElement("td");
+        var inline = document.createElement("input");
+        var inline2 = document.createElement("input");
+        document.getElementById("table").appendChild(tabler);
+        tabler.appendChild(tabled);
+        tabler.appendChild(tabled2);
+        tabled.innerHTML = "  "  + nameofcat + " Points  ";
+        tabled2.innerHTML = "  " + nameofcat + " Weight  ";
+        tabled.appendChild(inline);
+        tabled2.appendChild(inline2);
+        inline.setAttribute("id", "points" + rowCount);
+        inline2.setAttribute("id", "weight" + rowCount);
+        inline.setAttribute("placeholder", '70,80,90');
+        inline2.setAttribute("placeholder", "20");
+        rowCount++;
+        color(tabler, tabled);
     }
-    var tabler = document.createElement("tr");
-    var tabled = document.createElement("td");
-    var tabled2 = document.createElement("td");
-    var inline = document.createElement("input");
-    var inline2 = document.createElement("input");
-    document.getElementById("table").appendChild(tabler);
-    tabler.appendChild(tabled);
-    tabler.appendChild(tabled2);
-    tabled.innerHTML = "  "  + nameofcat + " Points  ";
-    tabled2.innerHTML = "  " + nameofcat + " Weight  ";
-    tabled.appendChild(inline);
-    tabled2.appendChild(inline2);
-    inline.setAttribute("id", "points" + rowCount);
-    inline2.setAttribute("id", "weight" + rowCount);
-    rowCount++;
-    color(tabler, tabled);
+
 }
 
 function color(x, y) {
@@ -56,8 +60,8 @@ function mathStart(){
             document.getElementById("final").innerHTML = "<h2>" + "Your grade seems to be an impossible number. Please check you seperated your point values by commas and that they are all correct" + "</h2>";
             document.getElementById("nextstep").innerHTML = "";
         }else{
-            document.getElementById("final").innerHTML = "<h2>" + "Congrats! You're Earning A:" + "<br>" + finalReturn + "%" + "</h2>" + "<br>";
-            document.getElementById("nextstep").innerHTML = "<h1>" + "Now to figure out what you need on your final" + "</h1>" + "<button onclick='FinalCalc()'>Show Me What I Need</button> "
+            document.getElementById("final").innerHTML = "<h2>" + "Congrats! You're Earning A:" + "<br>" + "<span id='cur'>" + finalReturn + "</span>" + "%" + "</h2>" + "<br>";
+            document.getElementById("nextstep").innerHTML = "<h1>" + "Now to figure out what you need on your final" + "</h1>" + "<br>" + "<input type-='text' id='want' placeholder='Enter the grade you want'>" + "<input type-='text' id='weightFinal' placeholder='Enter your finals weight'>" + "<button onclick='FinalCalc()'>Show Me What I Need</button>";
         }
     }
 }
@@ -96,12 +100,33 @@ function math(){
 }
 
 function FinalCalc(){
-    var curgrade = 0;
-    var want = document.getElementById("want").value;
+    var curgrade = parseInt(document.getElementById("cur").innerHTML);
+    var want = parseInt(document.getElementById("want").value);
     var weightFinal = document.getElementById("weightFinal").value;
-    var step1 = want - curgrade;
-    var step2 = 100 - weightFinal;
-    var step3 = step1 * step2;
-    var need = step3 / weightFinal;
-    return need;
+    var curWeight = 1 - (weightFinal/100);
+    var weightedCurrent = curgrade * curWeight;
+    var need = (want - weightedCurrent) / (weightFinal/100);
+    if(need > 100){
+        document.getElementById("finaloutput").innerHTML = "<br>" + "You need a " + need + "%" + " oh no looks like you need more than 100% on your final, oops better luck next time";
+    }else{
+        if(need == 100){
+            document.getElementById("finaloutput").innerHTML = "<br>" + "You need a " + need + "%" + " Better start studying for that perfect score";
+        }else{
+            if(need < 100 && need > 90){
+                document.getElementById("finaloutput").innerHTML = "<br>" + "You need a " + need + "%" + " Start studying soon";
+            }else{
+                if(need < 90 && need > 70){
+                    document.getElementById("finaloutput").innerHTML = "<br>" + "You need a " + need + "%" + " Very doable with a little effort";
+                }else{
+                    if(need < 70 && need > 0){
+                        document.getElementById("finaloutput").innerHTML = "<br>" + "You need a " + need + "%" + " easy for a smart person like you";
+                    }else{
+                        if(need < 0){
+                            document.getElementById("finaloutput").innerHTML = "<br>" + "You need a " + need + "%" + " its impossible not to get higher than that grade";
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
